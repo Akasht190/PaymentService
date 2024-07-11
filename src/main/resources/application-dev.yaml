@@ -1,0 +1,34 @@
+spring:
+  config:
+#    https://medium.com/@Marou_arnault/spring-boot-hide-your-credentials-fb1ca22ae911
+    import: file:dev.env.yaml
+  application:
+      name: "PaymentService-CustomName-dev"
+  datasource:
+##    MySQL
+#    url: "jdbc:mysql://localhost:3306/paymentservice?createDatabaseIfNotExist=true"
+#    username: "root"
+#    password: "root"
+
+#    SQLite
+#    https://www.baeldung.com/spring-boot-sqlite
+#    https://www.baeldung.com/java-in-memory-databases
+#    no need to create custom DataSource bean or custom dialect
+    url: "jdbc:sqlite:paymentservice_dev_DB.sqlite"
+#    this will create an in-memory database
+#    url: "jdbc:sqlite:memory:paymentDB.sqlite"
+    username: "sa"
+    password: "sa"
+
+# Test/development credentials
+razorpay:
+  key:
+    id: ${razorpay.key.id}
+    secret: ${razorpay.key.secret}
+
+stripe:
+  authentication:
+    publishable_key: ${stripe.authentication.publishable_key}
+    secret_key: ${stripe.authentication.secret_key}
+  productId: ${stripe.productId}
+  priceId: ${stripe.priceId}

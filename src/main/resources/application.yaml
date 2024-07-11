@@ -1,0 +1,67 @@
+server:
+  port: "8080"
+
+spring:
+  application:
+    name: "PaymentService-CustomName"
+  profiles:
+    # https://codesarray.com/view/Multiple-application-properties-file-in-spring-boot
+    active: "dev"
+    default: "dev"
+  jpa:
+    hibernate:
+      ddl-auto: "update"
+    show-sql: "true"
+  datasource:
+##    MySQL
+#    url: "jdbc:mysql://localhost:3306/paymentservice?createDatabaseIfNotExist=true"
+#    username: "root"
+#    password: "root"
+#    driver-class-name: "com.mysql.cj.jdbc.Driver"
+
+#    SQLite
+#    https://www.baeldung.com/spring-boot-sqlite
+#    https://www.baeldung.com/java-in-memory-databases
+#    no need to create custom DataSource bean or custom dialect
+    url: "jdbc:sqlite:paymentservice_DB.sqlite"
+#    this will create an in-memory database
+#    url: "jdbc:sqlite:memory:paymentDB.sqlite"
+    username: "sa"
+    password: "sa"
+    driver-class-name: "org.sqlite.JDBC"
+
+
+#Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,env,beans"
+  info:
+    env:
+      enabled: "true"
+
+#Actuator
+# /actuator/info
+info:
+  application:
+#    https://github.com/spring-projects/spring-boot/issues/8438#issuecomment-400657941
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+    applicationName: ${spring.application.name}
+
+
+
+# Test/development credentials
+razorpay:
+  key:
+    id: "default"
+    secret: "default"
+
+stripe:
+  authentication:
+    publishable_key: "default"
+    secret_key: "default"
+  productId: "default"
+  priceId: "default"
